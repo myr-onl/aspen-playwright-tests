@@ -1,0 +1,21 @@
+{
+  "catalog": {
+    "url": "https://example.aspendiscovery.org",
+    "ils": "koha"
+  },
+  "user": {
+    "username": "aspennifer.discoverina",
+    "password": "1234",
+    "invalidPassword": "4321"
+  },
+  "holdItem": {
+    "title": "Pride and prejudice",
+    "groupedWorkId": "909e86d6-ba65-5b37-e94b-1235a0a30c1c-eng",
+    "bibRecordId": "123456"
+  },
+  "volumeHoldItem": {
+    "title": "Fullmetal alchemist : complete series",
+    "groupedWorkId": "fed766fd-dde6-0074-12b8-05b5fc4ae87f-eng",
+    "bibRecordId": "654321"
+  }
+}

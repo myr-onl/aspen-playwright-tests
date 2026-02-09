@@ -1,0 +1,35 @@
+# Ignore custom test configs
+sites/**
+!sites/example.json
+
+# Ignore local environment settings
+.env
+.env.local
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Ignore folders from code editors
+.vscode
+.idea
+
+# Ignore temporary, cached, backup, and log files
+*.log
+*.tmp
+*.bak
+.cache/
+.parcel-cache/
+tmp/
+
+# Ignore macOS, Windows, and Linux files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*~
+*.swp
+*.swo
