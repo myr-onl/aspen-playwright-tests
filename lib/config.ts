@@ -1,7 +1,8 @@
+// @ts-ignore
 import path from 'path';
 
-const configFileName = process.env.SITE_CONFIG || 'example.json';
-const libraryData = require(path.resolve(__dirname, `../sites/${configFileName}.json`));
+const siteName = process.env.SITE_NAME || 'example';
+const libraryData = require(path.resolve(__dirname, `../sites/${siteName}/config.json`));
 
 export const config = {
     siteData: libraryData,
