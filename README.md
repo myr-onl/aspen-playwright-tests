@@ -37,7 +37,7 @@ Choose the method that sounds the easiest to you.
   <ol>
     <li>Open a terminal on your computer</li>
     <li>Navigate to the folder where you want to copy this repo</li>
-    <li>Run `git clone https://github.com/myr-onl/aspen-playwright-tests.git`</li>
+    <li>Run <code>git clone https://github.com/myr-onl/aspen-playwright-tests.git</code></li>
   </ol>
 </details>
 
@@ -98,17 +98,17 @@ Choose the method that sounds the easiest to you.
 Open this repository inside your IDE and open its terminal OR open your computer terminal and navigate to be inside of this repository.
 
 ### Headed Mode
-To watch your tests in real time run:
+To watch your tests in real time, run:
 ```bash
 npx playwright test --headed
 ```
 
 ### Headless Mode
-To run your tests across in the background run:
+To run your tests in the background, run:
 ```bash
 npx playwright test
 ```
 
 Information about whether your tests passed or failed will display inside the terminal.
 
-Once tests have finished running, you can also view test results by running `npx playwright show-report`.
+Once tests have finished, you can also view test results by running `npx playwright show-report`.
