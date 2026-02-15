@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 // @ts-ignore
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
+import { config } from './lib/config';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -21,6 +22,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    baseURL: config.siteData.catalog.url,
     trace: 'on-first-retry',
   },
 
@@ -61,11 +63,4 @@ export default defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
