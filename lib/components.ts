@@ -6,17 +6,20 @@ export class HeaderMenu {
     readonly hamburgerButton: Locator;
     readonly userAccountButton: Locator;
     readonly logoutButton: Locator;
+    readonly usernameField: Locator;
 
     constructor(page: Page) {
         this.loginButton = page.locator('#loginLink');
         this.hamburgerButton = page.locator('#header-menu-dropdown');
         this.userAccountButton = page.locator('#account-menu-dropdown');
         this.logoutButton = page.locator('#header-menu').locator('#logoutLink');
+        this.usernameField = page.locator('#username');
     }
 
     async signIn() {
         await test.step('Opening login modal', async () => {
             await this.loginButton.click();
+            await expect(this.usernameField).toBeVisible();
         });
     }
 
