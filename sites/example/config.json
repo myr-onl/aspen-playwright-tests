@@ -3,7 +3,7 @@
     "url": "https://example.aspendiscovery.org",
     "ils": "koha"
   },
-  "user": {
+  "patron": {
     "username": "aspennifer.discoverina",
     "password": "1234",
     "invalidPassword": "4321"
