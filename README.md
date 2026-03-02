@@ -102,14 +102,14 @@ npx playwright install
 ## 🏃 Running Test Suites
 Open this repository inside your IDE and open its terminal OR open your computer terminal and navigate to be inside of this repository.
 ### UI Mode (Recommended)
-Running tests in [UI mode](https://playwright.dev/docs/test-ui-mode) most closely resembles how we ran tests in the Selenium IDE browser extension.
+Running tests in [UI mode](https://playwright.dev/docs/test-ui-mode) gives you the most control over how tests are run and let's you inspect where failures have occurred as a snapshot.
 To open UI mode in a separate window, use the following command:
 ```bash
 npx playwright test --ui
 ```
 
 ### Headed Mode
-To watch your tests in real time using the base `playwright.config.ts` configuration, run:
+Running tests in headed mode most closely resembles how we ran tests in the Selenium IDE browser extension. To watch your tests in real time using the base `playwright.config.ts` configuration, run:
 ```bash
 npx playwright test --headed
 ```
