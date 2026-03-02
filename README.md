@@ -45,7 +45,12 @@ Choose the method that sounds the easiest to you.
 1. Open the repo in your favorite IDE (e.g., VSCode, IntelliJ, etc.) and open its terminal OR open your computer terminal and navigate inside the repository
 2. Run `npm install`
 > [!IMPORTANT]
-> If you are asked to install browsers with Playwright, say yes. These browsers are designed to run with Playwright and **not** regular browsers that will appear in your computer applications list.
+> If you are asked to install browsers with Playwright during install, say yes. If not, enter the command below to manually download them. These are testing browsers and **not** regular browsers that should appear in your computer applications list.
+
+#### Install Playwright test browser(s)
+```bash
+npx playwright install
+```
 
 ### 4. Create your site configuration file(s)
 1. Copy the `sites/example` directory to a new directory
@@ -81,7 +86,7 @@ Choose the method that sounds the easiest to you.
 </details>
 
 ### 5. Create your test configuration file
-1. Copy the `.env.example` file to a new file called `.env`
+1. Copy the `.env.example` file to a new file called `.env` inside the root directory
 2. Open `.env`
 3. Set your environment variables
 
