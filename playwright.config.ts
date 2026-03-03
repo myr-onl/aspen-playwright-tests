@@ -14,7 +14,10 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   /* Up default timeout since we're not running in parallel (i.e., to avoid false errors from tests taking longer than 30s to complete) */
-  timeout: 50_000,
+  timeout: 60_000,
+  expect: {
+    timeout: 10_000,
+  },
   reporter: 'html',
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
