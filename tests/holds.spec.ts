@@ -3,7 +3,12 @@ import { config } from '../lib/config';
 import { GroupedWorkView, HoldRequest } from "../page-objects/GroupedWorks";
 import { TitlesOnHold, HoldModals } from "../page-objects/UserAccount";
 
-// NOTE: These tests are not designed to run across several browsers simultaneously. Run within different environments one at a time.
+test.use({
+    // Use desktop viewport sizes to help Playwright grab all selectors
+    viewport: { width: 1920, height: 1080 },
+});
+
+// NOTE: These tests are not currently designed to run across several browsers simultaneously. Run within different environments one at a time.
 test.describe('Holds Suite', () => {
     let groupedWork: GroupedWorkView;
     let holds: TitlesOnHold;
