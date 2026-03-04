@@ -73,7 +73,7 @@ export class HoldRequest extends BasePage {
 
     async selectVolume() {
         await test.step('Selecting first volume in the dropdown', async () => {
-            await this.itemDropdown.selectOption({ index: 1 });
+            await this.volumeDropdown.selectOption({ index: 1 });
         });
     }
 
