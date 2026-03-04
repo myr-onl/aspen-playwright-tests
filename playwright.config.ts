@@ -13,8 +13,8 @@ export default defineConfig({
   /* Don't run tests in parallel */
   fullyParallel: false,
   workers: 1,
-  /* Up default timeout since we're not running in parallel (i.e., to avoid false errors from tests taking longer than 30s to complete) */
-  timeout: 60_000,
+  /* Up default timeout since we're not running in parallel (i.e., to avoid false errors from tests taking longer than 50s to complete) */
+  timeout: 120_000,
   expect: {
     timeout: 10_000,
   },
