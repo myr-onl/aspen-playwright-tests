@@ -76,7 +76,9 @@ export class LoginForm {
 
     async login(pass: string) {
         await test.step('Entering patron credentials', async () => {
+            await this.username.click();
             await this.username.fill(config.siteData.patron.username);
+            await this.password.click();
             await this.password.fill(pass);
         });
         await test.step('Clicking Sign In button', async () => {
