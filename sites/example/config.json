@@ -10,11 +10,13 @@
   },
   "holdItem": {
     "title": "Pride and prejudice",
+    "format": "Book",
     "groupedWorkId": "909e86d6-ba65-5b37-e94b-1235a0a30c1c-eng",
     "bibRecordId": "123456"
   },
   "volumeHoldItem": {
     "title": "Fullmetal alchemist : complete series",
+    "format": "Manga",
     "groupedWorkId": "fed766fd-dde6-0074-12b8-05b5fc4ae87f-eng",
     "bibRecordId": "654321"
   }

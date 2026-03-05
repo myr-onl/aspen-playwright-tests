@@ -29,7 +29,7 @@ test.describe('Holds Suite', () => {
             await groupedWork.loginForm.login(config.siteData.patron.password);
         });
 
-        await groupedWork.placeHold();
+        await groupedWork.placeHold(config.siteData.holdItem);
         await request.disableAutologout();
         await request.submitHoldRequest();
         await request.verifyHoldSuccess();
@@ -37,28 +37,28 @@ test.describe('Holds Suite', () => {
         await test.step('Go to Titles on Hold', async () => {
             await holds.goTo('/MyAccount/Holds');
             await holds.refresh();
-            await holds.findRequestedTitle(config.siteData.holdItem.title);
+            await holds.findRequestedTitle(config.siteData.holdItem.bibRecordId, config.siteData.holdItem.title);
         });
 
         await test.step('Freeze hold', async () => {
-            await holds.initFreeze();
+            await holds.initFreeze(config.siteData.holdItem.bibRecordId);
             await holdOption.setReactivationDate();
-            await holdOption.confirmFreeze();
+            await holdOption.confirmFreeze(config.siteData.holdItem.bibRecordId);
         });
 
         await test.step('Thaw hold', async () => {
-            await holds.initThaw();
-            await holdOption.confirmThaw();
+            await holds.initThaw(config.siteData.holdItem.bibRecordId);
+            await holdOption.confirmThaw(config.siteData.holdItem.bibRecordId);
         });
 
         await test.step('Change pickup location', async () => {
-            await holds.initPickupChange();
+            await holds.initPickupChange(config.siteData.holdItem.bibRecordId);
             await holdOption.selectPickupLocation();
             await holdOption.confirmPickupLocation();
         });
 
         await test.step('Cancel hold', async () => {
-            await holds.initCancel();
+            await holds.initCancel(config.siteData.holdItem.bibRecordId);
             await holdOption.confirmCancel();
         });
     });
@@ -71,35 +71,35 @@ test.describe('Holds Suite', () => {
             await groupedWork.loginForm.login(config.siteData.patron.password);
         });
 
-        await groupedWork.placeHold();
+        await groupedWork.placeHold(config.siteData.volumeHoldItem);
         await request.completeItemRequest();
         await request.verifyHoldSuccess();
 
         await test.step('Go back to Titles on Hold', async () => {
             await holds.goTo('/MyAccount/Holds');
             await holds.refresh();
-            await holds.findRequestedTitle(config.siteData.volumeHoldItem.title);
+            await holds.findRequestedTitle(config.siteData.volumeHoldItem.bibRecordId, config.siteData.volumeHoldItem.title);
         });
 
         await test.step('Freeze volume hold', async () => {
-            await holds.initFreeze();
+            await holds.initFreeze(config.siteData.volumeHoldItem.bibRecordId);
             await holdOption.setReactivationDate();
-            await holdOption.confirmFreeze();
+            await holdOption.confirmFreeze(config.siteData.volumeHoldItem.bibRecordId);
         });
 
         await test.step('Thaw volume hold', async () => {
-            await holds.initThaw();
-            await holdOption.confirmThaw();
+            await holds.initThaw(config.siteData.volumeHoldItem.bibRecordId);
+            await holdOption.confirmThaw(config.siteData.volumeHoldItem.bibRecordId);
         });
 
         await test.step('Change volume pickup location', async () => {
-            await holds.initPickupChange();
+            await holds.initPickupChange(config.siteData.volumeHoldItem.bibRecordId);
             await holdOption.selectPickupLocation();
             await holdOption.confirmPickupLocation();
         });
 
         await test.step('Cancel volume hold', async () => {
-            await holds.initCancel();
+            await holds.initCancel(config.siteData.volumeHoldItem.bibRecordId);
             await holdOption.confirmCancel();
         });
     });

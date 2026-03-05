@@ -4,22 +4,10 @@ import { config } from "../lib/config";
 
 export class TitlesOnHold extends BasePage {
     readonly refreshButton: Locator;
-    readonly resultTitle: Locator;
-    readonly cancelHoldButton: Locator;
-    readonly freezeHoldButton: Locator;
-    readonly frozenStatus: Locator;
-    readonly thawHoldButton: Locator;
-    readonly changePickupButton: Locator;
 
     constructor(page: Page) {
         super(page);
         this.refreshButton = page.getByTitle('Refresh');
-        this.resultTitle = page.locator('.result-title');
-        this.cancelHoldButton = page.locator('.cancelButton');
-        this.freezeHoldButton = page.locator('.freezeButton');
-        this.frozenStatus = page.locator('.frozenHold');
-        this.thawHoldButton = page.locator('.thawButton');
-        this.changePickupButton = page.locator ('.changePickupLocationButton');
     }
 
     async refresh() {
@@ -31,33 +19,33 @@ export class TitlesOnHold extends BasePage {
         }
     }
 
-    async findRequestedTitle(title: string) {
+    async findRequestedTitle(id: string, title: string) {
         await test.step('Verifying requested item is in holds list', async () => {
-            await expect(this.resultTitle.first()).toContainText(`${title}`)
+            await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.result-title')).toContainText(`${title}`)
         });
     }
 
-    async initFreeze() {
-        await expect(this.freezeHoldButton.first()).toBeVisible({ timeout: 15000 });
-        await this.freezeHoldButton.first().click();
+    async initFreeze(id: string) {
+        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.freezeButton')).toBeVisible({ timeout: 15000 });
+        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.freezeButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 
-    async initThaw() {
-        await expect(this.thawHoldButton.first()).toBeVisible();
-        await this.thawHoldButton.first().click();
+    async initThaw(id: string) {
+        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.thawButton')).toBeVisible();
+        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.thawButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 
-    async initPickupChange() {
-        await expect(this.changePickupButton.first()).toBeVisible();
-        await this.changePickupButton.first().click();
+    async initPickupChange(id: string) {
+        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.changePickupLocationButton')).toBeVisible();
+        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.changePickupLocationButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 
-    async initCancel() {
-        await expect(this.cancelHoldButton.first()).toBeVisible();
-        await this.cancelHoldButton.first().click();
+    async initCancel(id: string) {
+        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.cancelButton')).toBeVisible();
+        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.cancelButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 }
@@ -90,24 +78,24 @@ export class HoldModals extends TitlesOnHold {
         });
     }
 
-    async confirmFreeze() {
+    async confirmFreeze(id: string) {
         await test.step('Confirming thaw date', async () => {
             await this.confirmFreezeButton.click();
         });
 
         await test.step('Verifying hold indicates frozen status', async () => {
-            await expect(this.frozenStatus.first()).toBeVisible({ timeout: 10000 });
+            await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.frozenHold')).toBeVisible();
         });
     }
 
-    async confirmThaw() {
+    async confirmThaw(id: string) {
         await test.step('Verifying successful thaw', async () => {
             await this.modal.alert.isVisible();
             await expect(this.modal.alert.first()).toContainClass('alert-success');
         });
         await test.step('Verifying hold no longer indicates frozen status', async () => {
             await this.modal.close.click();
-            await expect(this.frozenStatus.first()).toBeHidden({ timeout: 10000 });
+            await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.frozenHold')).toBeHidden();
         });
     }
 

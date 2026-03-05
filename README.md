@@ -75,6 +75,7 @@ npx playwright install
     <li><code>holdItem</code>: A grouped work with a bib record in your ILS that can be placed on hold</li>
       <ul>
         <li><code>title</code>: Title exactly as it appears within grouped work view</li>
+        <li><code>format</code>: Format label value exactly as it appears within grouped work view</li>
         <li><code>groupedWorkId</code>: Unique ID for the grouped work (can be found in Staff view or grouped work URL)
         <li><code>bibRecordId</code>: Unique ID for the bib record (can be found with full record view URL)
       </ul>

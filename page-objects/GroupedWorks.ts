@@ -1,29 +1,64 @@
 import { test, expect, Page, Locator } from '@playwright/test';
 import { BasePage } from "./BasePage";
 
+type HoldItem = {
+    title: string;
+    format: string;
+    bibRecordId: string;
+    groupedWorkId: string;
+};
+
 export class GroupedWorkView extends BasePage {
-    readonly placeHoldButton: Locator;
+    readonly horizontalGroupedWork: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.placeHoldButton = page.getByRole('link', { name: 'Place Hold' });
+        this.horizontalGroupedWork = page.locator('.formatDisplayHorizontal');
     }
-    
+
     async open(id: string) {
         await test.step('Navigating to Grouped Work page', async () => {
             await this.page.goto(`/GroupedWork/${id}`)
         });
     }
 
-    async placeHold() {
-        await test.step('Placing hold on first item', async () => {
-            await this.placeHoldButton.click();
+    async placeHold(item: HoldItem) {
+        await test.step("Placing hold on item", async () => {
+            // Check for the horizontal grouped works layout
+            const isHorizontal = (await this.horizontalGroupedWork.count()) > 0;
+
+            if (isHorizontal) {
+                console.log("Horizontal layout detected. Using horizontal layout selectors.");
+                // Select the item's target format and wait for data to load
+                await this.page.locator(`.slider-slide[data-workid="${item.groupedWorkId}"][data-format="${item.format}"]`).click();
+                await expect(this.page.locator('.result-label').getByRole('link', { name: `${item.format}` })).toBeVisible({timeout:15000});
+                // If the big hold button applies to your bib, click it
+                if (await this.page.locator(`#firstRecordactionButton${item.bibRecordId}`).isVisible()) {
+                    await this.page.locator(`#firstRecordactionButton${item.bibRecordId}`).click();
+                } else {
+                    // Expand editions to find your bib's hold button
+                    console.log("Opening Show Editions to find the bib Place Hold button...");
+                    await this.page.locator(`#horizDisplayShowEditionsRow_${item.groupedWorkId}`).locator('.horizDisplayShowEditionsBtn').click();
+                    await this.page.locator(`#relatedRecordactionButton${item.bibRecordId}`).click();
+                }
+            } else {
+                console.log("Horizontal layout not detected. Using vertical layout selectors.");
+                // If the big hold button applies to your bib, click it
+                if (await this.page.locator(`#actionButton${item.bibRecordId}`).isVisible()) {
+                    await this.page.locator(`#actionButton${item.bibRecordId}`).click();
+                } else {
+                    // Expand editions to find your bib's hold button, click it
+                    await this.page.locator(`[id^="manifestation-toggle-text-${item.groupedWorkId}_${item.format}"]`).click();
+                    await this.page.locator(`#relatedRecordactionButton${item.bibRecordId}`).click();
+                }
+            }
+            // Verify that the modal pops
             await expect(this.modal.body).toBeVisible();
         });
     }
 }
 
-export class HoldRequest extends BasePage {
+export class HoldRequest extends GroupedWorkView {
     readonly requestButton: Locator;
     readonly autologout: Locator;
     readonly holdProcessing: Locator;
