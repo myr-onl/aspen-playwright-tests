@@ -22,6 +22,42 @@ test.describe('Holds Suite', () => {
         holdOption = new HoldModals(page);
     });
 
+    test('Clear any existing holds', async ({ page }) => {
+        // Log in and go to Holds page
+        await groupedWork.goHome();
+        await groupedWork.menu.signIn();
+        await groupedWork.loginForm.login(config.siteData.patron.password);
+        await groupedWork.menu.verifyLogin();
+        await holds.goTo('/MyAccount/Holds');
+        await holds.refresh();
+        // Wait for AJAX request to load all holds
+        await page.waitForResponse(response => {
+            return response.url().includes('/MyAccount/AJAX?method=getHolds&source=all') && response.status() === 200;
+        });
+
+        // Click 'Cancel All Pending' if holds exist
+        const holdRows = await page.locator('[class*="ilsHold_"]');
+        const count = await holdRows.count();
+        if (count === 0) {
+            console.log('No holds to cancel.');
+            return;
+        }
+
+        const cancelAllLinks = page.locator('a', { hasText: 'Cancel All Pending' });
+        if (await cancelAllLinks.first().isVisible()) {
+            await cancelAllLinks.first().click();
+            // Wait for the confirmation modal and click the correct button
+            const confirmCancelAllButton = page.locator('.modal-buttons .tool.btn.btn-primary');
+            await confirmCancelAllButton.waitFor({ state: 'visible', timeout: 5000 });
+            await confirmCancelAllButton.click();
+            // Wait for success alert
+            await page.waitForSelector('.modal-body .alert.alert-success', { timeout: 5000 });
+            await holds.refresh();
+        } else {
+            console.log('Cancel All Pending link not found.');
+        }
+    });
+
     test('Place Bib-Level Hold', async ({}) => {
         await test.step('Sign in with valid user', async () => {
             await groupedWork.open(config.siteData.holdItem.groupedWorkId);
