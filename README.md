@@ -103,7 +103,7 @@ npx playwright install
 ## 🏃 Running Test Suites
 Open this repository inside your IDE and open its terminal OR open your computer terminal and navigate to be inside of this repository.
 ### UI Mode (Recommended)
-Running tests in [UI mode](https://playwright.dev/docs/test-ui-mode) gives you the most control over how tests are run and let's you inspect where failures have occurred as a snapshot.
+Running tests in [UI mode](https://playwright.dev/docs/test-ui-mode) gives you the most control over how tests are run and lets you inspect where failures have occurred as a snapshot.
 To open UI mode in a separate window, use the following command:
 ```bash
 npx playwright test --ui
