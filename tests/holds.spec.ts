@@ -8,7 +8,8 @@ test.use({
     viewport: { width: 1920, height: 1080 },
 });
 
-// NOTE: These tests are not currently designed to run across several browsers simultaneously. Run within different environments one at a time.
+// NOTE: These tests are not currently designed to run across several browsers simultaneously.
+// Run within different environments one at a time.
 test.describe('Holds Suite', () => {
     let groupedWork: GroupedWorkView;
     let holds: TitlesOnHold;
@@ -79,12 +80,12 @@ test.describe('Holds Suite', () => {
         await test.step('Freeze hold', async () => {
             await holds.initFreeze(config.siteData.holdItem.bibRecordId);
             await holdOption.setReactivationDate();
-            await holdOption.confirmFreeze(config.siteData.holdItem.bibRecordId);
+            await holdOption.confirmFreeze();
         });
 
         await test.step('Thaw hold', async () => {
             await holds.initThaw(config.siteData.holdItem.bibRecordId);
-            await holdOption.confirmThaw(config.siteData.holdItem.bibRecordId);
+            await holdOption.confirmThaw();
         });
 
         await test.step('Change pickup location', async () => {
@@ -120,12 +121,12 @@ test.describe('Holds Suite', () => {
         await test.step('Freeze volume hold', async () => {
             await holds.initFreeze(config.siteData.volumeHoldItem.bibRecordId);
             await holdOption.setReactivationDate();
-            await holdOption.confirmFreeze(config.siteData.volumeHoldItem.bibRecordId);
+            await holdOption.confirmFreeze();
         });
 
         await test.step('Thaw volume hold', async () => {
             await holds.initThaw(config.siteData.volumeHoldItem.bibRecordId);
-            await holdOption.confirmThaw(config.siteData.volumeHoldItem.bibRecordId);
+            await holdOption.confirmThaw();
         });
 
         await test.step('Change volume pickup location', async () => {

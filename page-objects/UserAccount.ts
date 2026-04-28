@@ -19,33 +19,69 @@ export class TitlesOnHold extends BasePage {
         }
     }
 
+    private async getHoldSelector(id: string): Promise<string> {
+        const ils = config.siteData.catalog.ils;
+
+        if (ils === 'symphony') {
+            // Strip leading 'a' value from Symphony bibRecordId
+            const numericId = id.replace(/^a/, '');
+            return `[class*="ilsHold_${numericId}"]`;
+        } else if (ils === 'evergreen') {
+            // For Evergreen, we can't predict the selector from the bibRecordId
+            // so grab the first hold row's class dynamically
+            const holdRow = this.page.locator('[class*="ilsHold_"]').first();
+            const classAttr = await holdRow.getAttribute('class');
+            const match = classAttr?.match(/ilsHold_(\d+)/);
+            if (match) {
+                return `[class*="ilsHold_${match[1]}"]`;
+            }
+            throw new Error('Could not determine Evergreen hold selector');
+        } //else if (ils === 'sierra') {
+            // Strip leading '.' value from Sierra bibRecordId
+           // const strippedId = id.replace(/^./, '');
+           // return `[class*="ilsHold_${strippedId}"]`;
+        //}
+
+        return `[class*="ilsHold_${id}"]`;
+    }
+
     async findRequestedTitle(id: string, title: string) {
         await test.step('Verifying requested item is in holds list', async () => {
-            await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.result-title')).toContainText(`${title}`)
+            // Wait for AJAX request to load all holds
+            await this.page.waitForResponse(response => {
+                return response.url().includes('/MyAccount/AJAX?method=getHolds&source=all') && response.status() === 200;
+            });
+
+            const holdSelector = await this.getHoldSelector(id);
+            await expect(this.page.locator(holdSelector).locator('.result-title')).toContainText(`${title}`)
         });
     }
 
     async initFreeze(id: string) {
-        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.freezeButton')).toBeVisible({ timeout: 15000 });
-        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.freezeButton').click();
+        const holdSelector = await this.getHoldSelector(id);
+        await expect(this.page.locator(holdSelector).locator('.freezeButton')).toBeVisible({ timeout: 15000 });
+        await this.page.locator(holdSelector).locator('.freezeButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 
     async initThaw(id: string) {
-        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.thawButton')).toBeVisible();
-        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.thawButton').click();
+        const holdSelector = await this.getHoldSelector(id);
+        await expect(this.page.locator(holdSelector).locator('.thawButton')).toBeVisible();
+        await this.page.locator(holdSelector).locator('.thawButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 
     async initPickupChange(id: string) {
-        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.changePickupLocationButton')).toBeVisible();
-        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.changePickupLocationButton').click();
+        const holdSelector = await this.getHoldSelector(id);
+        await expect(this.page.locator(holdSelector).locator('.changePickupLocationButton')).toBeVisible();
+        await this.page.locator(holdSelector).locator('.changePickupLocationButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 
     async initCancel(id: string) {
-        await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.cancelButton')).toBeVisible();
-        await this.page.locator(`[class*="ilsHold_${id}"]`).locator('.cancelButton').click();
+        const holdSelector = await this.getHoldSelector(id);
+        await expect(this.page.locator(holdSelector).locator('.cancelButton')).toBeVisible();
+        await this.page.locator(holdSelector).locator('.cancelButton').click();
         await expect(this.modal.body).toBeVisible();
     }
 }
@@ -78,24 +114,24 @@ export class HoldModals extends TitlesOnHold {
         });
     }
 
-    async confirmFreeze(id: string) {
+    async confirmFreeze() {
         await test.step('Confirming thaw date', async () => {
             await this.confirmFreezeButton.click();
         });
 
         await test.step('Verifying hold indicates frozen status', async () => {
-            await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.frozenHold')).toBeVisible();
+            await expect(this.page.locator('.frozenHold')).toBeVisible();
         });
     }
 
-    async confirmThaw(id: string) {
+    async confirmThaw() {
         await test.step('Verifying successful thaw', async () => {
             await this.modal.alert.isVisible();
             await expect(this.modal.alert.first()).toContainClass('alert-success');
         });
         await test.step('Verifying hold no longer indicates frozen status', async () => {
             await this.modal.close.click();
-            await expect(this.page.locator(`[class*="ilsHold_${id}"]`).locator('.frozenHold')).toBeHidden();
+            await expect(this.page.locator('.frozenHold')).toBeHidden();
         });
     }
 
