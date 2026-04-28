@@ -37,7 +37,7 @@ test.describe('Holds Suite', () => {
         });
 
         // Click 'Cancel All Pending' if holds exist
-        const holdRows = await page.locator('[class*="ilsHold_"]');
+        const holdRows = page.locator('[class*="ilsHold_"]');
         const count = await holdRows.count();
         if (count === 0) {
             console.log('No holds to cancel.');
