@@ -1,0 +1,26 @@
+{
+  "chromium": {
+    "holdItem": {
+      "title": "Pride and prejudice",
+      "format": "Book",
+      "groupedWorkId": "909e86d6-ba65-5b37-e94b-1235a0a30c1c-eng",
+      "recordId": "1234"
+    }
+  },
+  "firefox": {
+    "holdItem": {
+      "title": "Conclave",
+      "format": "Audiobook CD",
+      "groupedWorkId": "c60eb1af-4101-5aea-6ccf-be5a377606f6-eng",
+      "recordId": "4321"
+    }
+  },
+  "webkit": {
+    "holdItem": {
+      "title": "Donkey Kong bananza",
+      "format": "Nintendo Switch 2",
+      "groupedWorkId": "25e7fb67-6e8c-52e1-4d40-98c0a9bb5dc0-eng",
+      "recordId": "5678"
+    }
+  }
+}

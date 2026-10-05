@@ -1,0 +1,28 @@
+{
+  "catalog": {
+    "url": "https://example.aspendiscovery.org",
+    "ils": "koha"
+  },
+  "run": {
+    "manualRefresh": true,
+    "changePickup": true,
+    "volumeHolds": true
+  },
+  "patron": {
+    "chromium": {
+      "username": "test.user.1",
+      "password": "1234",
+      "invalidPassword": "1111"
+    },
+    "firefox": {
+      "username": "test.user.2",
+      "password": "4321",
+      "invalidPassword": "1111"
+    },
+    "webkit": {
+      "username": "test.user.3",
+      "password": "5678",
+      "invalidPassword": "1111"
+    }
+  }
+}
