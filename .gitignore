@@ -1,6 +1,7 @@
 # Ignore custom test configs
 sites/*
 !sites/example
+!sites/active.json.example
 
 # Ignore local environment settings
 .env
