@@ -28,7 +28,7 @@ type PatronConfig = Patron | { [browser: string]: Patron };
 
 type SiteConfig = {
     catalog: { url: string; ils: string };
-    run: { manualRefresh: boolean; changePickup: boolean; volumeHolds: boolean };
+    run: { manualRefresh: boolean; freezeHolds: boolean; changePickup: boolean; volumeHolds: boolean };
     patron: PatronConfig;
 };
 

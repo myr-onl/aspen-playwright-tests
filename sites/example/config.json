@@ -5,6 +5,7 @@
   },
   "run": {
     "manualRefresh": true,
+    "freezeHolds": true,
     "changePickup": true,
     "volumeHolds": true
   },

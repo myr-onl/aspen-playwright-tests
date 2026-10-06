@@ -41,6 +41,7 @@ await holds.verifyHoldResponse(page, body, true);
     });
 
     test('Freeze hold with reactivation date', async ({ page }, testInfo) => {
+        test.skip(!site.config.run.freezeHolds, 'SKIPPED: Freezing holds disabled in site config.');
         await goToHolds(page, testInfo);
         await holds.findRequestedItem(page, 'ils', holdItem.recordId, holdItem.title);
         await holds.initFreeze(page, 'ils', holdItem.recordId);
@@ -50,6 +51,7 @@ await holds.verifyHoldResponse(page, body, true);
     });
 
     test('Change Reactivation Date', async ({ page }, testInfo) => {
+        test.skip(!site.config.run.freezeHolds, 'SKIPPED: Freezing holds disabled in site config.');
         await goToHolds(page, testInfo);
         await holds.findRequestedItem(page, 'ils', holdItem.recordId, holdItem.title);
         await holds.initFreeze(page, 'ils', holdItem.recordId);
@@ -59,6 +61,7 @@ await holds.verifyHoldResponse(page, body, true);
     });
 
     test('Thaw hold', async ({ page }, testInfo) => {
+        test.skip(!site.config.run.freezeHolds, 'SKIPPED: Freezing holds disabled in site config.');
         await goToHolds(page, testInfo);
         await holds.findRequestedItem(page, 'ils', holdItem.recordId, holdItem.title);
         const body = await holds.initThaw(page, 'ils', holdItem.recordId);
@@ -66,6 +69,7 @@ await holds.verifyHoldResponse(page, body, true);
     });
 
     test('Freeze hold without reactivation date', async ({ page }, testInfo) => {
+        test.skip(!site.config.run.freezeHolds, 'SKIPPED: Freezing holds disabled in site config.');
         await goToHolds(page, testInfo);
         await holds.findRequestedItem(page, 'ils', holdItem.recordId, holdItem.title);
         await holds.initFreeze(page, 'ils', holdItem.recordId);
@@ -77,7 +81,7 @@ await holds.verifyHoldResponse(page, body, true);
     });
 
     test('Change pickup location', async ({ page }, testInfo) => {
-        test.skip(!site.config.run.changePickup, 'Pickup change disabled in site config.');
+        test.skip(!site.config.run.changePickup, 'SKIPPED: Pickup changes disabled in site config.');
         await goToHolds(page, testInfo);
         await holds.findRequestedItem(page, 'ils', holdItem.recordId, holdItem.title);
         await holds.initPickupChange(page, 'ils', holdItem.recordId);

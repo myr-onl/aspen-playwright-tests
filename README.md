@@ -64,6 +64,7 @@ npx playwright install
     <li><code>run</code>: disable or enable specific test behavior</li>
     	<ul>
         	<li><code>manualRefresh</code>: whether to manually refresh the holds page after placing a hold</li>
+			<li><code>freezeHolds</code>: whether to freeze or thaw holds in holds tests</li>
         	<li><code>changePickup</code>: whether to change pickup location in holds tests</li>
         	<li><code>volumeHolds</code>: whether to run the volume holds suite</li>
       </ul>
@@ -98,7 +99,7 @@ npx playwright install
     	<ul>
          	<li><code>holdItem</code>: A grouped work with a bib record in your ILS that can be placed on hold</li>
         		<ul>
-        			<li><code>title</code>: Title exactly as it appears within the grouped work or search results</li>
+        			<li><code>title</code>: Title exactly as it appears within full record view</li>
         			<li><code>format</code>: Format label value exactly as it appears within grouped work view</li>
         			<li><code>groupedWorkId</code>: Unique ID for the grouped work (can be found in staff view or grouped work URL)</li>
                 	<li><code>recordId</code>: Unique ID for the ILS record</li>
