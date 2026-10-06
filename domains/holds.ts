@@ -16,22 +16,23 @@ async function findHoldButton(page: Page, item: HoldItem): Promise<Locator> {
     if (isHorizontal) {
         console.log('Horizontal layout detected.');
         await page.locator(`.slider-slide[data-workid="${item.groupedWorkId}"][data-format="${item.format}"]`).click();
-        await expect(page.locator('.result-label').getByRole('link', { name: `${item.format}` })).toBeVisible();
+        await expect(page.locator('.result-label').getByRole('link', { name: `${item.format}` })).toBeVisible({ timeout: 15000 });
 
-        const firstButton = page.locator(`#firstRecordactionButton${item.recordId}`).first();
+        // [id="..."] instead of #id: Sierra record IDs can contain dots (e.g. ".b16329958")
+        const firstButton = page.locator(`[id="firstRecordactionButton${item.recordId}"]`).first();
         if (await firstButton.isVisible()) return firstButton;
 
         console.log('Opening Show Editions to find the bib Place Hold button...');
         await page.locator(`#horizDisplayShowEditionsRow_${item.groupedWorkId}`).locator('.horizDisplayShowEditionsBtn').click();
-        return page.locator(`#relatedRecordactionButton${item.recordId}`).first();
+        return page.locator(`[id="relatedRecordactionButton${item.recordId}"]`).first();
     }
 
     console.log('Vertical layout detected.');
-    const mainButton = page.locator(`#actionButton${item.recordId}`).first();
+    const mainButton = page.locator(`[id="actionButton${item.recordId}"]`).first();
     if (await mainButton.isVisible()) return mainButton;
 
     await page.locator(`[id^="manifestation-toggle-text-${item.groupedWorkId}_${item.format}"]`).click();
-    return page.locator(`#relatedRecordactionButton${item.recordId}`).first();
+    return page.locator(`[id="relatedRecordactionButton${item.recordId}"]`).first();
 }
 
 // Places a hold and returns the server's response for verifyHoldResponse.
