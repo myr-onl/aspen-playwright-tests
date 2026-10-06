@@ -12,7 +12,7 @@ This repository contains Playwright tests for use with [Aspen Discovery](https:/
 Choose the method that sounds the easiest to you.
 
 <details>
-  <summary>With GitHub Desktop</summary>
+  <summary><h4 style="display:inline-block;margin:0">With GitHub Desktop</h4></summary>
   <ol>
     <li>Install <a href="https://desktop.github.com/download/">GitHub Desktop</a></li>
     <li>Go to <strong>File > Clone repository</strong></li>
@@ -23,7 +23,7 @@ Choose the method that sounds the easiest to you.
 </details>
 
 <details>
-  <summary>Via command line</summary>
+  <summary><h4 style="display:inline-block;margin:0">Via command line</h4></summary>
   <ol>
     <li>Open a terminal on your computer</li>
     <li>Navigate to the folder where you want to copy this repo</li>
@@ -31,21 +31,30 @@ Choose the method that sounds the easiest to you.
   </ol>
 </details>
 
-### 3. Install node modules in the repository
-1. Open the repo in your favorite IDE (e.g., VSCode, IntelliJ, etc.) and open its terminal OR open your computer terminal and navigate inside the repository
-2. Run `npm install`
-> [!IMPORTANT]
-> If you are asked to install browsers with Playwright during install, say yes. If not, enter the command below to manually download them. These are testing browsers and **not** regular browsers that should appear in your computer applications list.
+### 3. Install Playwright and node modules
+a. Open the repo in your favorite IDE (e.g., VSCode, IntelliJ, etc.) and open its terminal OR open your computer terminal and navigate inside the repository
 
-#### Install Playwright test browser(s)
+b. Install Playwright
+```bash
+npx playwright install --with-deps
+```
+> [!IMPORTANT]
+> This command should install Playwright and all the necessary testing browsers (which are **not** regular browsers that should appear in your computer applications list). If this command fails, try separating out the Playwright and browser install commands, as below.
+
 ```bash
 npx playwright install
+npx playwright install-deps
+```
+
+c. Install node_modules
+```bash
+npm install
 ```
 
 ### 4. Create your site configuration files
 1. Copy the `sites/example` directory and its contents to a new directory
 2. Name the new directory your intended site name (e.g. `grove.production`, `dev.localhost`, etc.)
-3. Copy `sites/active.json.example` to a new `sites/active.json` file and add your site name to the `name` variable
+3. Copy `sites/active.json.example` to a new `sites/active.json` file and add your site directory name as the `name` variable
 4. Open your site directory's `config.json`, `bibs.json`, and `lists.json` files
 5. Add your unique variables to each of the config file
 
@@ -53,7 +62,7 @@ npx playwright install
 > You can create multiple directories in `sites/` to run tests in different Aspen interfaces, e.g., consortial vs. member library catalogs. To swap between active sites, edit the `name` variable in `sites/active.json`.
 
 <details>
-  <summary>config.json</summary>
+  <summary><h4 style="display:inline-block;margin:0">config.json</h4></summary>
   <p>You also have the option to use a single test user by skipping <code>chromium</code>, <code>firefox</code>, or <code>webkit</code> and jumping straight to setting <code>username</code>, <code>password</code>, and <code>invalidPassword</code> variables.
   <ul>
     <li><code>catalog</code>: Basic info about your Aspen site</li>
@@ -93,7 +102,7 @@ npx playwright install
 </details>
 
 <details>
-  <summary>bibs.json</summary>
+  <summary><h4 style="display:inline-block;margin:0">bibs.json</h4></summary>
       <ul>
     <li><code>chromium</code>: Hold item for the chromium browser</li>
     	<ul>
@@ -129,7 +138,7 @@ npx playwright install
 </details>
 
 <details>
-  <summary>volumes.json</summary>
+  <summary><h4 style="display:inline-block;margin:0">volumes.json</h4></summary>
       <ul>
     <li><code>chromium</code>: Hold item for the chromium browser</li>
     	<ul>
@@ -164,8 +173,9 @@ npx playwright install
   </ul>
 </details>
 
-## Running Test Suites
+## Running Test Suites 🏃‍➡️
 Open this repository inside your IDE and open its terminal OR open your computer terminal and navigate to be inside of this repository.
+
 ### UI Mode (Recommended)
 Running tests in [UI mode](https://playwright.dev/docs/test-ui-mode) gives you the most control over how tests are run and lets you inspect where failures have occurred as a snapshot.
 To open UI mode in a separate window, use the following command:
@@ -173,13 +183,13 @@ To open UI mode in a separate window, use the following command:
 npx playwright test --ui
 ```
 
-### Headed Mode
+### Headed Mode (Selenium-esque)
 Running tests in headed mode most closely resembles how we ran tests in the Selenium IDE browser extension. To watch your tests in real time using the base `playwright.config.ts` configuration, run:
 ```bash
 npx playwright test --headed
 ```
 
-### Headless Mode
+### Headless Mode (Playwright default)
 To run your tests in the background, run:
 ```bash
 npx playwright test
@@ -189,7 +199,7 @@ Information about whether your tests passed or failed will display inside the te
 
 Once tests have finished, you can also view test results by running `npx playwright show-report`.
 
-## Project Directory Structure 🧬
+## Directory Structure 🧬
 - 📁 `/common`: Contains helper files for TypeScript or project architecture
 - 📁 `/domains`: Contains locators, actions, and logic related to a specific area (or domain) of Aspen functionality (e.g., holds, lists, events, etc.)
 - 📁 `/sites`: Contains site-specific directories
@@ -198,4 +208,5 @@ Once tests have finished, you can also view test results by running `npx playwri
         - 📄 `bibs.json`: ILS records used in various test suites
         - 📄 `volumes.json`: ILS records that allow item-level requests (mostly just used in the volume holds suite)
 - 📁 `/tests`: Contains test suites, organized by related user behavior or workflows (e.g., Holds, Lists, etc.)
+- 📁 `/tests/custom`: Contains test suites local to your library (not git tracked)
 - 📄 `playwright.config.ts`: Playwright configuration file
