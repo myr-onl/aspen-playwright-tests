@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "Playwright tests for Aspen Discovery",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "headless": "npx playwright test",
+    "ui": "npx playwright test --ui",
+    "headed": "npx playwright test --headed",
+    "headless:custom": "npx playwright test --project=custom",
+    "ui:custom": "npx playwright test --ui --project=custom",
+    "headed:custom": "npx playwright test --headed --project=custom"
+  },
   "keywords": [],
   "author": "",
   "license": "",

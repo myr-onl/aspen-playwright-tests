@@ -1,0 +1,26 @@
+{
+  "chromium": {
+    "volumeHoldItem": {
+      "title": "Death note",
+      "format": "Manga",
+      "groupedWorkId": "fed766fd-dde6-0074-12b8-05b5fc4ae87f-eng",
+      "recordId": "1234"
+    }
+  },
+  "firefox": {
+    "volumeHoldItem": {
+      "title": "A dream of red mansions",
+      "format": "Book",
+      "groupedWorkId": "3cf0debf-1435-ce16-389f-e9ba5ca702d1-eng",
+      "recordId": "4321"
+    }
+  },
+  "webkit": {
+    "volumeHoldItem": {
+      "title": "The New Yorker",
+      "format": "Serial",
+      "groupedWorkId": "48d06cd3-3ce0-8db6-5bbd-d47e54b23b93-eng",
+      "recordId": "5678"
+    }
+  }
+}
